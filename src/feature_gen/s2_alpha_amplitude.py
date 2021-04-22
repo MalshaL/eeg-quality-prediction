@@ -4,6 +4,7 @@ This module calculates the highest amplitude score based on the alpha band of th
 
 import numpy as np
 from mne.filter import filter_data
+from src.common import csv_export
 
 
 def get_alpha_band(np_data):
@@ -11,7 +12,7 @@ def get_alpha_band(np_data):
 
 
 # score 2
-def get_score(np_data, channels):
+def get_score(subject, np_data, channels):
     alpha_data = get_alpha_band(np_data)
     print(alpha_data.shape)
     # get maximum amp of each channel
@@ -30,4 +31,6 @@ def get_score(np_data, channels):
             score += 1
         elif sorted_index > len(channels)/4:
             score += 0.5
-    return (score/10)*100
+    score = (score/10)*100
+    print(score)
+    csv_export.write_data("2", [[score]], ['alpha_amp'], subject)
