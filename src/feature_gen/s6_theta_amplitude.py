@@ -3,6 +3,7 @@ This module calculates the highest amplitude score based on the theta band of th
 """
 
 from mne.filter import filter_data
+from src.common import csv_export
 
 
 def get_theta_band(np_data):
@@ -10,11 +11,12 @@ def get_theta_band(np_data):
 
 
 # score 6
-def get_score(np_data):
+def get_score(dataset, subject, np_data):
     theta_data = get_theta_band(np_data)
     max_amp = 30
     scores = []
     for row in theta_data:
         amp_count = sum(abs(i) < max_amp for i in row)
         scores.append(amp_count / len(row))
-    return sum(scores) / len(scores)
+    score = sum(scores) / len(scores)
+    csv_export.write_data("6", [[score]], ['theta_amp'], dataset, subject)

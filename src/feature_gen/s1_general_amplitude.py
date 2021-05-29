@@ -18,7 +18,7 @@ plt.rc('figure', titlesize=8)
 
 
 # score 1
-def get_score(subject, np_data, channels):
+def get_score(dataset, subject, np_data, channels):
     bin_width = 1000
     j = 1
     plt.figure(figsize=(11.69, 16.53))
@@ -53,7 +53,7 @@ def get_score(subject, np_data, channels):
     plt.margins(0, 0)
     plt.gca().xaxis.set_major_locator(plt.NullLocator())
     plt.gca().yaxis.set_major_locator(plt.NullLocator())
-    plt.savefig("../../plots/s1/sub_%s.pdf" % subject, bbox_inches='tight', pad_inches=0, dpi=1200)
+    plt.savefig("../../plots/%s/s1/sub_%s.pdf" % (dataset, subject), bbox_inches='tight', pad_inches=0, dpi=1200)
     print("Final score: mean=%f median=%f" % (mean(scores), median(scores)))
     print("Kurtosis: mean=%f median=%f" % (mean(kurtosis_list), median(kurtosis_list)))
-    csv_export.write_data("1", [[median(scores), median(kurtosis_list)]], ['score_1', 'kurtosis'], subject)
+    csv_export.write_data("1", [[median(scores), median(kurtosis_list)]], ['gen_amp', 'kurtosis'], dataset, subject)

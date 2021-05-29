@@ -12,7 +12,7 @@ def get_alpha_band(np_data):
 
 
 # score 2
-def get_score(subject, np_data, channels):
+def get_score(dataset, subject, np_data, channels):
     alpha_data = get_alpha_band(np_data)
     print(alpha_data.shape)
     # get maximum amp of each channel
@@ -33,4 +33,4 @@ def get_score(subject, np_data, channels):
             score += 0.5
     score = (score/10)*100
     print(score)
-    csv_export.write_data("2", [[score]], ['alpha_amp'], subject)
+    csv_export.write_data("2", [[score]], ['alpha_amp'], dataset, subject)

@@ -3,6 +3,7 @@ This module calculates the beta amplitude score based on the beta band of the si
 """
 
 from mne.filter import filter_data
+from src.common import csv_export
 
 
 def get_beta_band(np_data):
@@ -10,13 +11,13 @@ def get_beta_band(np_data):
 
 
 # score 4
-def get_score(np_data):
+def get_score(dataset, subject, np_data):
     beta_data = get_beta_band(np_data)
-    print(np_data.shape)
-    print(beta_data.shape)
     max_amp = 20
     scores = []
     for row in beta_data:
         amp_count = sum(abs(i) < max_amp for i in row)
         scores.append(amp_count/len(row))
-    return sum(scores)/len(scores)
+    score = sum(scores)/len(scores)
+    print(score)
+    csv_export.write_data("4", [[score]], ['beta_amp'], dataset, subject)
